@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="../css/stylesheet.css">
+        <script src="../scripts/script.js"></script>
+    </head>
+    <body>
+        <h1> Argify </h1>
+        <div class="flexer">
+        <div class="container">
+            <label for="name">Name:</label>
+            <input type="text" id="name"></input>
+            <label for="default">Default:</label>
+            <input type="text" id="default"></input>
+            <label for="type">Type:</label>
+            <input type="text" id="type"></input>
+            <label for="req">Required:</label>
+            <input type="text" id="req"></input>
+            <label for="description">Description:</label>
+            <textarea name="desc" id="description"></textarea>
+
+        </div>
+        <div class="container">
+            <label for="arg">Argument spec:</label>
+            <textarea name="arg" id="arg" readonly></textarea>
+            
+        </div>
+        <div class="container">
+            <h1>Functions:</h1>
+            <div class="functions-border">
+            <button type="button" onclick="argify_set(values.name, values.def, values.type, values.required, values.description)" id="argify_set" disabled="true">Argify Set</button>
+            <button type="button" onclick="argify_plus(values.name, values.def, values.type, values.required, values.description)" id="argify_plus" disabled="true">Argify Add</button>
+            <button type="button" onclick="clear_latest()" id="clear_latest">Clear Latest</button>
+            <button type="button" onclick="insertControl()">Insert Control</button>
+            <button type="button" onclick="quickInsert()">Quick Insert</button>
+            </div>
+            <div class="reqs_border">
+            <form class="reqs">
+                <input type="radio" id="req_switch" name="req" value="1">
+                <label for="req">With required</label><br>
+                <input type="radio" id="not_req_switch" name="req" value="1">
+                <label for="not_req">Without required</label><br>
+            </form>
+            </div>
+        </div>
+        <div class="container" style="margin-left: 30px">
+            <h1> Warnings: </h1>
+            <textarea name="warnings" id="warnings" readonly></textarea>
+        </div>
+        </div>
+    </body>
+</html>

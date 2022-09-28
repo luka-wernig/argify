@@ -1,0 +1,48 @@
+.flexer {
+    display: flex;
+    flex-direction: row;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    margin: 0px;
+}
+input[type=text] {
+    width: 90%;
+}
+textarea{
+    width: 90%;
+    height: 150px;
+}
+
+button {
+    padding: 20px;
+    margin: 20px;
+    width: 100px;
+}
+
+#arg {
+    width: 90%;
+    height: 310px;
+    resize: vertical;
+}
+
+.functions-border{
+    padding: 10px;
+    border: black 2px solid;
+    border-radius: 5%;
+}
+
+#warnings {
+    resize: none;
+    width: 80%;
+    height: 100px;
+}
+
+.reqs {
+   
+    margin-top: 20px;
+    padding: 5px;
+    text-align: center;
+}
