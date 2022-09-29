@@ -42,35 +42,40 @@ window.onload = () => {
             - Clear index
 */
 
-
-
 function clear_latest(){
     let text: string = document.getElementById("arg")!.innerHTML;
     let working_text = text.split(/\r?\n/);
-    //console.log(working_text);
-    for(let i = working_text.length-2; i>=0; i--){
-        
-        
-        // console.log(`"${working_text[i]}" <-- working text\n${i} <-- i, "${working_text[working_text.length-1]}" <-- goal`);
-        
-        
-        // for(let i = 0; i < working_text[7].length; i++){
-        //     let diff: boolean = (working_text[7][i] == working_text[working_text.length-1][i]);
-        //     console.log(diff);
-        //     if(!diff) console.log(`diff : [${working_text[7][i]}] [${working_text[working_text.length-1][i]}]`)
-        // }
-        
-        
-        if(working_text[i] == working_text[working_text.length-1]){
-            delete working_text[i];
-            break;
-        }
-        delete working_text[i];
+    let ix = working_text.length-1;
+    for(let i = 0; i < lens[lens.length-1]; i++){    
+
+        working_text.splice(ix--, 1);
     }
-    console.log(working_text);
+    lens.splice(lens.length-1, 1);
+    if(lensIndex > 0) lensIndex--;
+    
+    let output = working_text.toString();
+    for(let i = 0; i < output.length; i++){
+        if(output[i] == ','){
+            output = replaceChar(i, output, '\n');
+            if(output[i-1] == ','){
+                output = output.substring(0, i-1);
+                break;
+                // output.concat("    '\n'");
+            } 
+        }
+    }
+    console.log(output);
+    document.getElementById("arg")!.innerHTML = output;
+    
 }
 function clear_x(){
+    // get input for x
+    // let x = input, let sum = 0;
+    let text: string = document.getElementById("arg")!.innerHTML;
+    let working_text = text.split(/\r?\n/);
+    for(let i = lens.length; i >= 0; i--){
 
+    }
 }
 function clear_index(){
 
@@ -115,6 +120,7 @@ function argify_plus(name, def, type, req, description){
     ${'\t'}default: ${def}
     ${'\t'}required: ${req}
     `;
+    lens[lensIndex++] = 7;
     }
     else{
     document.getElementById("arg")!.innerHTML += 
@@ -125,6 +131,7 @@ function argify_plus(name, def, type, req, description){
     ${'\t'}type: ${type}
     ${'\t'}default: ${def}
     `;
+    lens[lensIndex++]= 6;
     }
 }
 
@@ -186,6 +193,11 @@ function quickInsert(){
     argify_plus(values.name, values.def, values.type, values.required, values.description);
     insertControl(2);
     argify_plus(values.name, values.def, values.type, values.required, values.description);    
+}
+
+function replaceChar(index: number, str: string, chr){
+    if(index > str.length-1) return str;
+    return str.substring(0,index) + chr + str.substring(index+1);
 }
 
 // TODO: Multiplication and division

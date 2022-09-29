@@ -10,6 +10,8 @@ var values = {
     required: "",
     description: ""
 };
+var lensIndex = 0;
+var lens = [];
 var elements = {};
 // Sets values
 window.onload = function () {
@@ -33,30 +35,78 @@ window.onload = function () {
     }
 };
 /* TODO: Functions:
-            - Clear one
+            - Clear one (DONE)
             - Clear X
             - Clear index
 */
-function clear_latest() {
+function clear_latest_deprecate() {
     var text = document.getElementById("arg").innerHTML;
     var working_text = text.split(/\r?\n/);
-    //console.log(working_text);
-    for (var i = working_text.length - 2; i >= 0; i--) {
+    var ix = working_text.length - 1;
+    console.log(lens);
+    // console.log(working_text);
+    // for(let i = working_text.length-2; i>=0; i--){
+    for (var i = 0; i < lens[lens.length - 1]; i++) {
         // console.log(`"${working_text[i]}" <-- working text\n${i} <-- i, "${working_text[working_text.length-1]}" <-- goal`);
         // for(let i = 0; i < working_text[7].length; i++){
         //     let diff: boolean = (working_text[7][i] == working_text[working_text.length-1][i]);
         //     console.log(diff);
         //     if(!diff) console.log(`diff : [${working_text[7][i]}] [${working_text[working_text.length-1][i]}]`)
         // }
-        if (working_text[i] == working_text[working_text.length - 1]) {
-            delete working_text[i];
-            break;
-        }
-        delete working_text[i];
+        // if(working_text[i] == working_text[working_text.length-1]){
+        //     delete working_text[i];
+        //     break;
+        // }
+        delete working_text[ix--];
     }
-    console.log(working_text);
+    lens.splice(lens.length - 1, 1);
+    if (lensIndex > 0)
+        lensIndex--;
+    var output = working_text.toString();
+    for (var i = 0; i < output.length; i++) {
+        if (output[i] == ',') {
+            output = replaceChar(i, output, '\n');
+            if (output[i - 1] == ',') {
+                output = output.substring(0, i - 1);
+                break;
+                // output.concat("    '\n'");
+            }
+        }
+    }
+    console.log(output);
+    document.getElementById("arg").innerHTML = output;
+}
+function clear_latest() {
+    var text = document.getElementById("arg").innerHTML;
+    var working_text = text.split(/\r?\n/);
+    var ix = working_text.length - 1;
+    for (var i = 0; i < lens[lens.length - 1]; i++) {
+        working_text.splice(ix--, 1);
+    }
+    lens.splice(lens.length - 1, 1);
+    if (lensIndex > 0)
+        lensIndex--;
+    var output = working_text.toString();
+    for (var i = 0; i < output.length; i++) {
+        if (output[i] == ',') {
+            output = replaceChar(i, output, '\n');
+            if (output[i - 1] == ',') {
+                output = output.substring(0, i - 1);
+                break;
+                // output.concat("    '\n'");
+            }
+        }
+    }
+    console.log(output);
+    document.getElementById("arg").innerHTML = output;
 }
 function clear_x() {
+    // get input for x
+    // let x = input, let sum = 0;
+    var text = document.getElementById("arg").innerHTML;
+    var working_text = text.split(/\r?\n/);
+    for (var i = lens.length; i >= 0; i--) {
+    }
 }
 function clear_index() {
 }
@@ -64,20 +114,24 @@ function argify_set(name, def, type, req, description) {
     if (req) {
         document.getElementById("arg").innerHTML =
             "\n    ".concat(name, ":\n    ").concat('\t', "description:\n    ").concat('\t', "- ").concat(description, "\n    ").concat('\t', "type: ").concat(type, "\n    ").concat('\t', "default: ").concat(def, "\n    ").concat('\t', "required: ").concat(req, "\n    ");
+        lens[lensIndex++] = 7;
     }
     else {
         document.getElementById("arg").innerHTML =
             "\n    ".concat(name, ":\n    ").concat('\t', "description:\n    ").concat('\t', "- ").concat(description, "\n    ").concat('\t', "type: ").concat(type, "\n    ").concat('\t', "default: ").concat(def, "\n    ");
+        lens[lensIndex++] = 6;
     }
 }
 function argify_plus(name, def, type, req, description) {
     if (req != "") {
         document.getElementById("arg").innerHTML +=
             "\n    ".concat(name, ":\n    ").concat('\t', "description:\n    ").concat('\t', "- ").concat(description, "\n    ").concat('\t', "type: ").concat(type, "\n    ").concat('\t', "default: ").concat(def, "\n    ").concat('\t', "required: ").concat(req, "\n    ");
+        lens[lensIndex++] = 7;
     }
     else {
         document.getElementById("arg").innerHTML +=
             "\n    ".concat(name, ":\n    ").concat('\t', "description:\n    ").concat('\t', "- ").concat(description, "\n    ").concat('\t', "type: ").concat(type, "\n    ").concat('\t', "default: ").concat(def, "\n    ");
+        lens[lensIndex++] = 6;
     }
 }
 function insertControl(control) {
@@ -138,6 +192,11 @@ function quickInsert() {
     argify_plus(values.name, values.def, values.type, values.required, values.description);
     insertControl(2);
     argify_plus(values.name, values.def, values.type, values.required, values.description);
+}
+function replaceChar(index, str, chr) {
+    if (index > str.length - 1)
+        return str;
+    return str.substring(0, index) + chr + str.substring(index + 1);
 }
 // TODO: Multiplication and division
 function derivate(func) {
