@@ -39,43 +39,6 @@ window.onload = function () {
             - Clear X
             - Clear index
 */
-function clear_latest_deprecate() {
-    var text = document.getElementById("arg").innerHTML;
-    var working_text = text.split(/\r?\n/);
-    var ix = working_text.length - 1;
-    console.log(lens);
-    // console.log(working_text);
-    // for(let i = working_text.length-2; i>=0; i--){
-    for (var i = 0; i < lens[lens.length - 1]; i++) {
-        // console.log(`"${working_text[i]}" <-- working text\n${i} <-- i, "${working_text[working_text.length-1]}" <-- goal`);
-        // for(let i = 0; i < working_text[7].length; i++){
-        //     let diff: boolean = (working_text[7][i] == working_text[working_text.length-1][i]);
-        //     console.log(diff);
-        //     if(!diff) console.log(`diff : [${working_text[7][i]}] [${working_text[working_text.length-1][i]}]`)
-        // }
-        // if(working_text[i] == working_text[working_text.length-1]){
-        //     delete working_text[i];
-        //     break;
-        // }
-        delete working_text[ix--];
-    }
-    lens.splice(lens.length - 1, 1);
-    if (lensIndex > 0)
-        lensIndex--;
-    var output = working_text.toString();
-    for (var i = 0; i < output.length; i++) {
-        if (output[i] == ',') {
-            output = replaceChar(i, output, '\n');
-            if (output[i - 1] == ',') {
-                output = output.substring(0, i - 1);
-                break;
-                // output.concat("    '\n'");
-            }
-        }
-    }
-    console.log(output);
-    document.getElementById("arg").innerHTML = output;
-}
 function clear_latest() {
     var text = document.getElementById("arg").innerHTML;
     var working_text = text.split(/\r?\n/);
